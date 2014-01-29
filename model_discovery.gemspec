@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Sameer Rahmani"]
   s.email       = ["lxsameer@gnu.org"]
   s.homepage    = "https://github.com/Yellowen/model_discovery"
+  s.licenses = ["GPL-2"]
   s.summary     = "A fast solution to model detection in Ruby on Rails."
   s.description = "Detecting all models in a rails application (even those in gems) without loading them at runtime is a troublesome task with model_discovery done."
 

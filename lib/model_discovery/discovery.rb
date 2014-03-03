@@ -7,7 +7,7 @@ module ModelDiscovery
     all_gems.each do |gem|
       if gem.groups.include? Rails.env.to_sym or gem.groups.include? :default
         puts "Gem name: #{gem.name}"
-        spec = Gem::Specification.find_by_name gem.name
+        spec = Gem::Specification.find_by(name: gem.name)
         discover spec.gem_dir
       end
     end
@@ -17,7 +17,7 @@ module ModelDiscovery
 
     # Create a content type entry for all Models
     ActiveRecord::Base.subclasses.each do |model|
-      ApplicationModels.create(:model => model.to_s)
+      ApplicationModels.find_or_create_by(model: model.to_s)
     end
   end
 

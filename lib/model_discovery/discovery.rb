@@ -7,7 +7,7 @@ module ModelDiscovery
     all_gems.each do |gem|
       if gem.groups.include? Rails.env.to_sym or gem.groups.include? :default
         puts "Gem name: #{gem.name}"
-        spec = Gem::Specification.find_by(name: gem.name)
+        spec = Gem::Specification.find_by_name gem.name
         discover spec.gem_dir
       end
     end

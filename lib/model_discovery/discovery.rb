@@ -1,4 +1,6 @@
 module ModelDiscovery
+
+  # Create a list of current rails application tables or documents
   def self.build_table_list
     # Get all gem by requiring them
     all_gems = Bundler.require()
@@ -15,9 +17,17 @@ module ModelDiscovery
     # Discover models in current rails app and load them
     discover Rails.root
 
-    # Create a content type entry for all Models
-    ActiveRecord::Base.subclasses.each do |model|
-      ApplicationModels.find_or_create_by(model: model.to_s)
+    if defined? ActiveRecord
+      # Create a content type entry for all Models
+      ActiveRecord::Base.subclasses.each do |model|
+        ApplicationModels.find_or_create_by(model: model.to_s)
+      end
+    end
+
+    if defined? Mongoid
+      Mongoid.models.each do |model|
+        ApplicationModels.find_or_create_by(model: model.to_s)
+      end
     end
   end
 

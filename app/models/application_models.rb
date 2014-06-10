@@ -1,6 +1,6 @@
 # This model contains all the model names in a rails
 # application
-class ApplicationModels < (defined? ActiveRecord ? ActiveRecord::Base : Object)
+class ApplicationModels < (defined?(ActiveRecord) ? ActiveRecord::Base : Object)
 
   if defined? Mongoid
     include Mongoid::Document

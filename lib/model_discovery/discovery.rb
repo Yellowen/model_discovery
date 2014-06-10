@@ -26,6 +26,7 @@ module ModelDiscovery
 
     if defined? Mongoid
       Mongoid.models.each do |model|
+        puts ">>>>>>>>>>>>>>>>>> ", model
         ApplicationModels.find_or_create_by(model: model.to_s)
       end
     end

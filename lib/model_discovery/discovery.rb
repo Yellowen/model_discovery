@@ -1,7 +1,7 @@
 module ModelDiscovery
 
   # Create a list of current rails application tables or documents
-  def self.build_table_list
+  def self.build_table_list(without_habtm = true)
     # Get all gem by requiring them
     all_gems = Bundler.require()
 
@@ -20,13 +20,18 @@ module ModelDiscovery
     if defined? ActiveRecord
       # Create a content type entry for all Models
       ActiveRecord::Base.subclasses.each do |model|
-        ApplicationModels.find_or_create_by(model: model.to_s)
+        #unless model.name.to_s.starts_with? 'HABTM_'
+        if !model.name.to_s.starts_with?('HABTM_') &&  !without_habtm
+          ApplicationModels.find_or_create_by(model: model.name)
+        end
       end
     end
 
     if defined? Mongoid
       Mongoid.models.each do |model|
-        ApplicationModels.find_or_create_by(model: model.to_s)
+        if !model.name.to_s.starts_with?('HABTM_') &&  !without_habtm
+          ApplicationModels.find_or_create_by(model: model.name)
+        end
       end
     end
   end

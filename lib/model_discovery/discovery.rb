@@ -20,23 +20,26 @@ module ModelDiscovery
     if defined? ActiveRecord
       # Create a content type entry for all Models
       ActiveRecord::Base.subclasses.each do |model|
-        #unless model.name.to_s.starts_with? 'HABTM_'
-        if !model.name.to_s.starts_with?('HABTM_') &&  !without_habtm
-          ApplicationModels.find_or_create_by(model: model.name)
-        end
+        create_model model.name, without_habtm
       end
     end
 
     if defined? Mongoid
       Mongoid.models.each do |model|
-        if !model.name.to_s.starts_with?('HABTM_') &&  !without_habtm
-          ApplicationModels.find_or_create_by(model: model.name)
-        end
+        create_model model.name, without_habtm
       end
     end
   end
 
   private
+
+  def self.create_model(name, without_habtm)
+    if name.to_s.starts_with?('HABTM_')
+      ApplicationModels.find_or_create_by(model: name) if !without_habtm
+    else
+      ApplicationModels.find_or_create_by(model: name)
+    end
+  end
 
   def self.discover(path)
     Dir["#{path}/app/models/**/*.rb"].each do |model_file|

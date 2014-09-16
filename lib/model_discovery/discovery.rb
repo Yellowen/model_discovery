@@ -44,7 +44,11 @@ module ModelDiscovery
   def self.discover(path)
     Dir["#{path}/app/models/**/*.rb"].each do |model_file|
       puts "File matched: #{model_file}"
-      load model_file
+      begin
+        load model_file
+      rescue ActiveSupport::Concern::MultipleIncludedBlocks => e
+        puts "[Ignored]: ActiveSupport::Concern::MultipleIncludedBlocks on #{model_file}"
+      end
     end
   end
 end

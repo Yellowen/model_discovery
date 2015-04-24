@@ -36,7 +36,7 @@ model_class = models[0].constantize
 # It's like User.all
 model_class.all
 ```
-It's simple isn't it ?    
+It's simple isn't it ?
 ## Bugs
 If you find any bug or have any issue using this gem I'll be happy to know. Please file an issue in [Issue Tracker](https://github.com/Yellowen/model_discovery/issues)
 ## Contributing
@@ -46,3 +46,13 @@ If you find any bug or have any issue using this gem I'll be happy to know. Plea
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Credit
+![Yellowen](http://www.yellowen.com/images/logo.png)
+
+**Model Discovery**  is maintained and funded by Yellowen. Whenever a code snippet is borrowed or inspired by existing code, we try to credit the original developer/designer in our source code. Let us know if you think we have missed to do this.
+
+
+# License
+
+**Model Discovery** is Copyright © 2013-2015 Yellowen. It is free software, and may be redistributed under the terms specified in the LICENSE file.

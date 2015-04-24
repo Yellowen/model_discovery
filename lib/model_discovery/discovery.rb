@@ -8,9 +8,9 @@ module ModelDiscovery
     # Discover all model files in gem files and load them
     all_gems.each do |gem|
       if gem.groups.include? Rails.env.to_sym or gem.groups.include? :default
-        puts "Gem name: #{gem.name}"
-        spec = Gem::Specification.find_by_name gem.name
-        discover spec.gem_dir
+        puts "Gem name: \t#{gem.name}"
+        spec = Gem::Specification.find_all_by_name gem.name
+        discover spec.first.gem_dir
       end
     end
 
@@ -43,7 +43,7 @@ module ModelDiscovery
 
   def self.discover(path)
     Dir["#{path}/app/models/**/*.rb"].each do |model_file|
-      puts "File matched: #{model_file}"
+      puts "File matched: \t#{model_file}"
       begin
         load model_file
       rescue ActiveSupport::Concern::MultipleIncludedBlocks => e

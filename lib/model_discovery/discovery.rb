@@ -3,7 +3,7 @@ module ModelDiscovery
   # Create a list of current rails application tables or documents
   def self.build_table_list(without_habtm = true)
     # Get all gem by requiring them
-    all_gems = Bundler.require()
+    all_gems = Bundler.load.dependencies
 
     # Discover all model files in gem files and load them
     all_gems.each do |gem|
@@ -45,9 +45,13 @@ module ModelDiscovery
     Dir["#{path}/app/models/**/*.rb"].each do |model_file|
       puts "File matched: \t#{model_file}"
       begin
-        load model_file
+        require model_file
       rescue ActiveSupport::Concern::MultipleIncludedBlocks => e
         puts "[Ignored]: ActiveSupport::Concern::MultipleIncludedBlocks on #{model_file}"
+      rescue ArgumentError => e
+        if e.to_s.ends_with? 'another_enum'
+          puts "[Ignored]: 'enum' redifination ignored."
+        end
       end
     end
   end
